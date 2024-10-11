@@ -407,10 +407,9 @@ public class TwoPersonDrive extends LinearOpMode {
     public void drive() {
         double throttle = 0.4 + 0.6 * gamepad1.right_trigger;
 
-
         double y = -gamepad1.left_stick_y * throttle; // Remember, this is reversed!
-
         double x = 0; // this is strafing
+
         if (gamepad1.left_bumper) {
             x -= 1;
         }
