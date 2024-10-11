@@ -311,6 +311,14 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 //                liftPosition -= 2800 * cycletime;
             }
 
+            // Double check.
+            // Checks again if liftPosition is beyond its boundries or not.
+            // If it is outside the boundries, then it limits it to the boundries between 0 and the high bucket lift position.
+            if (liftPosition < 0) {
+                liftPosition = 0;
+            } else if (liftPosition > robot.LIFT_SCORING_IN_HIGH_BASKET) {
+                liftPosition = robot.LIFT_SCORING_IN_HIGH_BASKET;
+            }
 
             robot.hangMotor.setTargetPosition((int) armPosition);
             robot.liftMotor.setTargetPosition((int) liftPosition);
