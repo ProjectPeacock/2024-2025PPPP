@@ -59,14 +59,14 @@ public class HWProfile {
 
     public final double ARM_COLLAPSED_INTO_ROBOT  = 0;
     public final double ARM_COLLECT               = 0 * ARM_TICKS_PER_DEGREE;
-    public final int ARM_CLEAR_BARRIER         = 150;
-//    public final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
+  //  public final int ARM_CLEAR_BARRIER         = 300;
+    public final double ARM_CLEAR_BARRIER         = 30 * ARM_TICKS_PER_DEGREE;
     public final int ARM_SCORE_SPECIMEN        = 300;
 //    public final double ARM_SCORE_SPECIMEN        = 90 * ARM_TICKS_PER_DEGREE;
-    public final double ARM_SCORE_SAMPLE_IN_LOW   = 90 * ARM_TICKS_PER_DEGREE;
-    public final double ARM_ATTACH_HANGING_HOOK   = 110 * ARM_TICKS_PER_DEGREE;
-    public final double ARM_WINCH_ROBOT           = 10  * ARM_TICKS_PER_DEGREE;
-    public final int ARM_HIGH_SCORE           = 700;
+    public final double ARM_SCORE_SAMPLE_IN_LOW   = 100 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_ATTACH_HANGING_HOOK   = 130 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_WINCH_ROBOT           = 0  * ARM_TICKS_PER_DEGREE;
+    public final int ARM_HIGH_SCORE           = 130;
 
     /* Variables to store the speed the intake servo should be set at to intake, and deposit game elements. */
     public final double INTAKE_COLLECT    = -1.0;
@@ -74,8 +74,8 @@ public class HWProfile {
     public final double INTAKE_DEPOSIT    =  0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    public final double WRIST_FOLDED_IN   = 0.1667;
-    public final double WRIST_FOLDED_OUT  = 0.5;
+    public final double WRIST_FOLDED_IN   = 0.3;
+    public final double WRIST_FOLDED_OUT  = .9;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     public final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -84,7 +84,7 @@ public class HWProfile {
 
     public final double LIFT_TICKS_PER_MM = (111132.0 / 289.0) / 120.0;
 
-    public final double LIFT_COLLAPSED = 0 * LIFT_TICKS_PER_MM;
+    public final double LIFT_COLLAPSED = 10 * LIFT_TICKS_PER_MM;
     public final double LIFT_SCORING_IN_LOW_BASKET = 0 * LIFT_TICKS_PER_MM;
     public final double LIFT_SCORING_IN_HIGH_BASKET = 480 * LIFT_TICKS_PER_MM;
 
@@ -141,9 +141,9 @@ public class HWProfile {
         //armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftMotor.setTargetPosition(0);
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         /* Define and initialize servos.*/
         intake = hwmap.get(CRServo.class, "intake");
