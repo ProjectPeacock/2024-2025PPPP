@@ -94,8 +94,8 @@ public class TwoWheelLocalizerPinpoint extends Localizer { // todo: make two whe
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.LEFT)));
 
         // TODO: replace these with your encoder ports
-        forwardEncoder = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
-        strafeEncoder = hardwareMap.get(GoBildaPinpointDriver.class,"odo");
+        forwardEncoder = hardwareMap.get(GoBildaPinpointDriver.class,"Encoder");
+        strafeEncoder = hardwareMap.get(GoBildaPinpointDriver.class,"Encoder");
 
         // TODO: reverse any encoders necessary
         forwardEncoder.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
