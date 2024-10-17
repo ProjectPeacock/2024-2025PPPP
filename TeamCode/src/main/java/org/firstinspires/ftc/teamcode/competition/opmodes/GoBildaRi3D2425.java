@@ -110,17 +110,18 @@ public class GoBildaRi3D2425 extends LinearOpMode {
         waitForStart();
 
         /* Run until the driver presses stop */
-        while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y;
+        while (opModeIsActive())
+
+        {  double y = -gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
             // The equivalent button is start on Xbox-style controllers.
-//            if (gamepad1.options) {
-//                imu.resetYaw();
-//            }
+            if (gamepad1.options) {
+                imu.resetYaw();
+            }
 
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
@@ -245,7 +246,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             }
 
             else if (gamepad2.a) {
-                liftPosition = robot.LIFT_COLLAPSED;
+                liftPosition = 0;
             }
 
             /*
@@ -336,9 +337,9 @@ public class GoBildaRi3D2425 extends LinearOpMode {
              */
 
             if(gamepad2.left_stick_y > 0){
-                armPosition =- 0.1;
+                armPosition =- 1;
             } else if (gamepad2.left_stick_y < 0){
-                armPosition =+ 0.1;
+                armPosition =+ 1;
             }
 //            robot.hangMotor.setPower(-gamepad2.left_stick_y);
 

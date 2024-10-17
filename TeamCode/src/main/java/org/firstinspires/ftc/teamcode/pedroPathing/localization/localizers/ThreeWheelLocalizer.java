@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -40,7 +39,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 4/2/2024
  */
-@Disabled
+@Config
 public class ThreeWheelLocalizer extends Localizer {
     private HardwareMap hardwareMap;
     private Pose startPose;
@@ -86,9 +85,9 @@ public class ThreeWheelLocalizer extends Localizer {
         hardwareMap = map;
 
         // TODO: replace these with your encoder ports
-        //leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
-       // rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
-        //strafeEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "strafeEncoder"));
+        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
+        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
+        strafeEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "strafeEncoder"));
 
         // TODO: reverse any encoders necessary
         leftEncoder.setDirection(Encoder.REVERSE);
