@@ -27,6 +27,9 @@ public class HWProfile {
     public CRServo  intake           = null; //the active intake servo
     public Servo    wrist            = null; //the wrist servo
 
+    public Servo    intakeRotate1    = null;
+    public Servo    intakeRotate2    = null;
+
 
 
 
@@ -72,6 +75,14 @@ public class HWProfile {
     public final double INTAKE_COLLECT    = -1.0;
     public final double INTAKE_OFF        =  0.0;
     public final double INTAKE_DEPOSIT    =  0.5;
+
+    // Variables for intake rotation positions
+    public final double INTAKE_ROTATION_MULTIPLIER = 0.3;
+
+    public final double INTAKE_R1_P1 = 0;
+    public final double INTAKE_R1_P2 = 0 + INTAKE_ROTATION_MULTIPLIER;
+    public final double INTAKE_R2_P1 = 1;
+    public final double INTAKE_R2_P2 = 1 - INTAKE_ROTATION_MULTIPLIER;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
     public final double WRIST_FOLDED_IN   = 0.1667;
@@ -148,10 +159,16 @@ public class HWProfile {
         /* Define and initialize servos.*/
         intake = hwmap.get(CRServo.class, "intake");
         wrist  = hwmap.get(Servo.class, "wrist");
+        intakeRotate1 = hwmap.get(Servo.class, "intakeR1");
+        intakeRotate2 = hwmap.get(Servo.class, "intakeR2");
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
         wrist.setPosition(WRIST_FOLDED_OUT);
+
+        // Initializing positions for intake rotation servos
+        intakeRotate1.setPosition(0);
+        intakeRotate2.setPosition(1);
 
     }
 }
