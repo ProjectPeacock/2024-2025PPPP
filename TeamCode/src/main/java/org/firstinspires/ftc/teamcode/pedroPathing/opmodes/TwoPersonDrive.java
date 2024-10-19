@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.competition.opmodes;
+package org.firstinspires.ftc.teamcode.pedroPathing.opmodes;
 
 import static org.firstinspires.ftc.teamcode.competition.util.RobotConstants.INNER_OUTTAKE_CLAW_CLOSED;
 import static org.firstinspires.ftc.teamcode.competition.util.RobotConstants.INNER_OUTTAKE_CLAW_OPEN;

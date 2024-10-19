@@ -1,26 +1,19 @@
 package org.firstinspires.ftc.teamcode.competition.hardware;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 public class HWProfile {
 
     /* Declare OpMode members. */
-    public DcMotor  leftFrontDrive   = null; //the left drivetrain motor
-    public DcMotor  rightFrontDrive  = null; //the right drivetrain motor
-    public DcMotor  leftBackDrive    = null;
-    public DcMotor  rightBackDrive   = null;
+    public DcMotorEx  leftFrontDrive   = null; //the left drivetrain motor
+    public DcMotorEx  rightFrontDrive  = null; //the right drivetrain motor
+    public DcMotorEx  leftBackDrive    = null;
+    public DcMotorEx  rightBackDrive   = null;
    // public DcMotor  armMotor         = null; //the arm motor
     public DcMotor  liftMotor        = null; //
     public DcMotor  hangMotor        = null;
@@ -60,9 +53,10 @@ public class HWProfile {
     If you'd like it to move further, increase that number. If you'd like it to not move
     as far from the starting position, decrease it. */
 
-    public final double ARM_COLLAPSED_INTO_ROBOT  = 0;
+    public final double ARM_COLLAPSED_INTO_ROBOT  = 10;
     public final double ARM_COLLECT               = 0 * ARM_TICKS_PER_DEGREE;
-    public final int ARM_CLEAR_BARRIER         = 150;
+    public final int ARM_CLEAR_BARRIER         = 200;
+    public final double ARM_EXTENSION_ANGLE = 500;
 //    public final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
     public final int ARM_SCORE_SPECIMEN        = 300;
 //    public final double ARM_SCORE_SPECIMEN        = 90 * ARM_TICKS_PER_DEGREE;
@@ -106,14 +100,15 @@ public class HWProfile {
     public void init(HardwareMap hwmap) {
 
         /* Define and Initialize Motors */
-        leftFrontDrive  = hwmap.dcMotor.get("frontLeftMotor");
-        leftBackDrive   = hwmap.dcMotor.get("backLeftMotor");
-        rightFrontDrive = hwmap.dcMotor.get("frontRightMotor");
-        rightBackDrive  = hwmap.dcMotor.get("backRightMotor");
+        leftFrontDrive  =  hwmap.get(DcMotorEx.class, "frontLeftMotor");
+        leftBackDrive   = hwmap.get(DcMotorEx.class, "backLeftMotor");
+        rightFrontDrive = hwmap.get(DcMotorEx.class, "frontRightMotor");
+        rightBackDrive  = hwmap.get(DcMotorEx.class, "backRightMotor");
         liftMotor       = hwmap.dcMotor.get("liftMotor");
         //armMotor        = hwmap.get(DcMotor.class, "left_arm"); //the arm motor
         hangMotor       = hwmap.dcMotor.get("hangMotor");
-
+        intakeRotate1   = hwmap.servo.get("intakeR1");
+        intakeRotate2   = hwmap.servo.get("intakeR2");
 
        /*
        we need to reverse the left side of the drivetrain so it doesn't turn when we ask all the
@@ -167,8 +162,8 @@ public class HWProfile {
         wrist.setPosition(WRIST_FOLDED_OUT);
 
         // Initializing positions for intake rotation servos
-        intakeRotate1.setPosition(0);
-        intakeRotate2.setPosition(1);
+        intakeRotate1.setPosition(0.5);
+        intakeRotate2.setPosition(.5);
 
     }
 }

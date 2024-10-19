@@ -20,20 +20,17 @@
  *   SOFTWARE.
  */
 
-package org.firstinspires.ftc.teamcode.competition.opmodes;
+package org.firstinspires.ftc.teamcode.pedroPathing.opmodes;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 
 import org.firstinspires.ftc.teamcode.competition.hardware.HWProfile;
 
@@ -65,7 +62,7 @@ import org.firstinspires.ftc.teamcode.competition.hardware.HWProfile;
 public class GoBildaRi3D2425 extends LinearOpMode {
 
     private final static HWProfile robot = new HWProfile();
-
+    private Follower follower;
     double liftPosition = robot.LIFT_COLLAPSED;
 
     double cycletime = 0;
@@ -77,10 +74,13 @@ public class GoBildaRi3D2425 extends LinearOpMode {
     /* Variables that are used to set the arm to a specific position */
     double armPosition = (int)robot.ARM_COLLAPSED_INTO_ROBOT;
     double armPositionFudgeFactor;
+    private com.qualcomm.robotcore.hardware.HardwareMap HardwareMap;
 
 
     @Override
     public void runOpMode() {
+
+        
         /*
         These variables are private to the OpMode, and are used to control the drivetrain.
          */
@@ -90,6 +90,8 @@ public class GoBildaRi3D2425 extends LinearOpMode {
         double rotate;
         double max;
 
+        //follower.startTeleopDrive();
+        
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
         // Adjust the orientation parameters to match your robot
@@ -110,9 +112,11 @@ public class GoBildaRi3D2425 extends LinearOpMode {
         waitForStart();
 
         /* Run until the driver presses stop */
-        while (opModeIsActive())
 
-        {  double y = -gamepad1.left_stick_y;
+        // follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
+        //follower.update();
+        while (opModeIsActive()) {
+            double y = -gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
 
@@ -162,11 +166,9 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
             if (gamepad1.left_bumper) {
                 robot.intake.setPower(robot.INTAKE_COLLECT);
-            }
-            else if (gamepad1.right_bumper) {
+            } else if (gamepad1.right_stick_button) {
                 robot.intake.setPower(robot.INTAKE_OFF);
-            }
-            else if (gamepad1.y) {
+            } else if (gamepad1.right_bumper) {
                 robot.intake.setPower(robot.INTAKE_DEPOSIT);
             }
 
@@ -189,64 +191,50 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
 
-            if(gamepad1.a){
+            if (gamepad1.a) {
                 /* This is the intaking/collecting arm position */
                 armPosition = robot.ARM_HIGH_SCORE;
                 liftPosition = robot.LIFT_COLLAPSED;
                 robot.wrist.setPosition(robot.WRIST_FOLDED_OUT);
                 robot.intake.setPower(robot.INTAKE_COLLECT);
 
-            }
-
-            else if (gamepad1.b){
+            } else if (gamepad1.b) {
                     /*This is about 20° up from the collecting position to clear the barrier
                     Note here that we don't set the wrist position or the intake power when we
                     select this "mode", this means that the intake and wrist will continue what
                     they were doing before we clicked left bumper. */
                 armPosition = robot.ARM_CLEAR_BARRIER;
-            }
-
-            else if (gamepad1.x){
+            } else if (gamepad1.x) {
                 /* This is the correct height to score the sample in the HIGH BASKET */
                 armPosition = robot.ARM_SCORE_SAMPLE_IN_LOW;
                 //liftPosition = LIFT_SCORING_IN_HIGH_BASKET;
-            }
-
-            else if (gamepad1.dpad_left) {
+            } else if (gamepad1.dpad_left) {
                     /* This turns off the intake, folds in the wrist, and moves the arm
                     back to folded inside the robot. This is also the starting configuration */
                 armPosition = robot.ARM_COLLAPSED_INTO_ROBOT;
                 //liftPosition = LIFT_COLLAPSED;
                 robot.intake.setPower(robot.INTAKE_OFF);
                 robot.wrist.setPosition(robot.WRIST_FOLDED_OUT);
-            }
-
-            else if (gamepad1.dpad_right){
+            } else if (gamepad1.dpad_right) {
                 /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
                 armPosition = robot.ARM_SCORE_SPECIMEN;
                 robot.wrist.setPosition(robot.WRIST_FOLDED_IN);
-            }
-
-            else if (gamepad2.dpad_up){
+            } else if (gamepad2.dpad_up) {
                 /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
                 armPosition = robot.ARM_ATTACH_HANGING_HOOK;
                 robot.intake.setPower(robot.INTAKE_OFF);
                 robot.wrist.setPosition(robot.WRIST_FOLDED_IN);
-            }
-
-            else if (gamepad2.dpad_down){
+            } else if (gamepad2.dpad_down) {
                 /* this moves the arm down to lift the robot up once it has been hooked */
                 armPosition = robot.ARM_WINCH_ROBOT;
                 robot.intake.setPower(robot.INTAKE_OFF);
                 robot.wrist.setPosition(robot.WRIST_FOLDED_IN);
-            }
-
-            else if (gamepad2.y) {
+            } else if (gamepad2.y) {
                 liftPosition = robot.LIFT_SCORING_IN_HIGH_BASKET;
-            }
-
-            else if (gamepad2.a) {
+            } else if (gamepad2.a) {
                 liftPosition = 0;
+            } else if (gamepad1.y){
+                armPosition = robot.ARM_EXTENSION_ANGLE;
             }
 
             /*
@@ -264,10 +252,9 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             to a value.
              */
 
-            if (armPosition < 45 * robot.ARM_TICKS_PER_DEGREE){
+            if (armPosition < 45 * robot.ARM_TICKS_PER_DEGREE) {
                 armLiftComp = (0.25568 * liftPosition);
-            }
-            else{
+            } else {
                 armLiftComp = 0;
             }
 
@@ -302,11 +289,10 @@ public class GoBildaRi3D2425 extends LinearOpMode {
              */
 
             // If the button is pressed and liftPosition is not surpassing the range it should be in, then liftPosition is changed accordingly.
-            if (gamepad2.right_bumper && (liftPosition + 20) < robot.LIFT_SCORING_IN_HIGH_BASKET ){
+            if (gamepad2.right_bumper && (liftPosition + 20) < robot.LIFT_SCORING_IN_HIGH_BASKET) {
                 liftPosition += 20;
 //                liftPosition += 2800 * cycletime;
-            }
-            else if (gamepad2.left_bumper && (liftPosition - 20) > 0){
+            } else if (gamepad2.left_bumper && (liftPosition - 20) > 0) {
                 liftPosition -= 20;
 //                liftPosition -= 2800 * cycletime;
             }
@@ -328,18 +314,18 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
 
             /* Check to see if our arm is over the current limit, and report via telemetry. */
-           // if (((DcMotorEx) robot.armMotor).isOverCurrent()){
-             //   telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!");
+            // if (((DcMotorEx) robot.armMotor).isOverCurrent()){
+            //   telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!");
 
             /* at the very end of the stream, we added a linear actuator kit to try to hang the robot on.
              * it didn't end up working... But here's the code we run it with. It just sets the motor
              * power to match the inverse of the left stick y.
              */
 
-            if(gamepad2.left_stick_y > 0){
-                armPosition =- 1;
-            } else if (gamepad2.left_stick_y < 0){
-                armPosition =+ 1;
+            if (gamepad2.left_stick_y > 0) {
+                armPosition = -1;
+            } else if (gamepad2.left_stick_y < 0) {
+                armPosition = +1;
             }
 //            robot.hangMotor.setPower(-gamepad2.left_stick_y);
 
@@ -355,7 +341,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
              */
             looptime = getRuntime();
-            cycletime = looptime-oldtime;
+            cycletime = looptime - oldtime;
             oldtime = looptime;
 
 
@@ -363,11 +349,11 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             //telemetry.addData("arm Target Position: ", robot.armMotor.getTargetPosition());
             //telemetry.addData("arm Encoder: ", robot.armMotor.getCurrentPosition());
             telemetry.addData("lift variable", liftPosition);
-            telemetry.addData("Lift Target Position",robot.liftMotor.getTargetPosition());
+            telemetry.addData("Lift Target Position", robot.liftMotor.getTargetPosition());
             telemetry.addData("lift current position", robot.liftMotor.getCurrentPosition());
-            telemetry.addData("liftMotor Current:",((DcMotorEx) robot.liftMotor).getCurrent(CurrentUnit.AMPS));
+            telemetry.addData("liftMotor Current:", ((DcMotorEx) robot.liftMotor).getCurrent(CurrentUnit.AMPS));
             telemetry.update();
 
         }
-    }
-}
+    }}
+

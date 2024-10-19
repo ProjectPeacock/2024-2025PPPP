@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.competition.opmodes;
+package org.firstinspires.ftc.teamcode.pedroPathing.opmodes;
 
 import static org.firstinspires.ftc.teamcode.competition.util.RobotConstants.INTAKE_ARM_AUTO_AVOID_POSITION;
 import static org.firstinspires.ftc.teamcode.competition.util.RobotConstants.INTAKE_ARM_IN_POSITION;
@@ -26,15 +26,11 @@ import static org.firstinspires.ftc.teamcode.competition.util.RobotConstants.TRA
 import static org.firstinspires.ftc.teamcode.competition.util.RobotConstants.TRANSFER_RESET;
 import static java.lang.Thread.sleep;
 
-import android.util.Size;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.competition.opmodes.TwoPersonDrive;
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierCurve;
@@ -46,8 +42,6 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.SingleRunAction;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.Timer;
-import org.firstinspires.ftc.teamcode.competition.util.VisionPortalTeamPropPipeline;
-import org.firstinspires.ftc.vision.VisionPortal;
 
 import java.util.ArrayList;
 
