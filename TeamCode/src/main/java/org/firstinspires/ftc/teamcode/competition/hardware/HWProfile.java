@@ -110,6 +110,7 @@ public class HWProfile {
         intakeRotate1   = hwmap.servo.get("intakeR1");
         intakeRotate2   = hwmap.servo.get("intakeR2");
 
+
        /*
        we need to reverse the left side of the drivetrain so it doesn't turn when we ask all the
        drive motors to go forward.
@@ -166,4 +167,6 @@ public class HWProfile {
         intakeRotate2.setPosition(.5);
 
     }
+    public static final double AUTO_MAX_SPEED = .75;
+
 }
