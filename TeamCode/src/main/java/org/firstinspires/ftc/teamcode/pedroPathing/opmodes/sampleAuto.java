@@ -8,15 +8,15 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.teamcode.competition.hardware.HWProfile;
 import org.firstinspires.ftc.teamcode.competition.libraries.RobotLibrary;
 
-@Autonomous(name = "rightAuto", group = "Robot")
+@Autonomous(name = "sampleAuto", group = "Robot")
 //@Disabled
 
-public class rightAuto extends LinearOpMode {
+public class sampleAuto extends LinearOpMode {
     private HWProfile robot = new HWProfile();
     private final LinearOpMode opMode = this;
     private RobotLibrary lib = new RobotLibrary(robot, opMode);
 
-    public rightAuto() {
+    public sampleAuto() {
 
     }
 
@@ -45,17 +45,38 @@ public class rightAuto extends LinearOpMode {
 
         //raise arm
         robot.hangMotor.setPower(1);
-        robot.hangMotor.setTargetPosition(500);
-        sleep(500);
+        robot.hangMotor.setTargetPosition(2200);
+        sleep(1000);
+
+        //extend arm
+        robot.liftMotor.setPower(1);
+        robot.liftMotor.setTargetPosition(1500);
+        sleep(1000);
+        robot.wrist.setPosition(0.55);
 
 
-        lib.moveDirection("vertical", 0.5);
-        sleep(150);
+        lib.moveDirection("forward", 0.3);
+        sleep(900);
         lib.halt();
         sleep(100);
-        lib.moveDirection("horizontal", 0.5);
+//        lib.moveDirection("horizontal", 0.5);
         sleep(2000);
         lib.halt();
+
+        //spit out sample
+        robot.intake.setPower(1);
+        sleep(1000);
+
+        //back up
+        lib.moveDirection("backward",-0.3);
+        sleep(800);
+        lib.halt();
+
+        //retract arm
+        robot.liftMotor.setTargetPosition(0);
+        sleep(2000);
+        robot.hangMotor.setTargetPosition(100);
+        sleep(1000);
 
         requestOpModeStop();
         telemetry.addData("Status: ","Program Completed.");

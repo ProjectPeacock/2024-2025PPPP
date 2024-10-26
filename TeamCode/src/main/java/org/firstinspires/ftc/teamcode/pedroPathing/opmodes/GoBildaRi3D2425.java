@@ -166,8 +166,8 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
             if (gamepad1.left_bumper) {
                 robot.intake.setPower(robot.INTAKE_COLLECT);
-                robot.intakeRotate1.setPosition(.5);
-                robot.intakeRotate2.setPosition(.5);
+//                robot.intakeRotate1.setPosition(.5);
+//                robot.intakeRotate2.setPosition(.5);
             } else if (gamepad1.right_stick_button) {
                 robot.intake.setPower(robot.INTAKE_OFF);
             } else if (gamepad1.right_bumper) {

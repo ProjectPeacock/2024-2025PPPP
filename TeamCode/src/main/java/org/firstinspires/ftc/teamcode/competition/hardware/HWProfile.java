@@ -20,8 +20,8 @@ public class HWProfile {
     public CRServo  intake           = null; //the active intake servo
     public Servo    wrist            = null; //the wrist servo
 
-    public Servo    intakeRotate1    = null;
-    public Servo    intakeRotate2    = null;
+//    public Servo    intakeRotate1    = null;
+//    public Servo    intakeRotate2    = null;
 
 
 
@@ -57,9 +57,9 @@ public class HWProfile {
     public final double ARM_COLLECT               = 0 * ARM_TICKS_PER_DEGREE;
     public final int ARM_CLEAR_BARRIER         = 200;
     public final double ARM_EXTENSION_ANGLE = 500;
-//    public final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
+    //    public final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
     public final int ARM_SCORE_SPECIMEN        = 300;
-//    public final double ARM_SCORE_SPECIMEN        = 90 * ARM_TICKS_PER_DEGREE;
+    //    public final double ARM_SCORE_SPECIMEN        = 90 * ARM_TICKS_PER_DEGREE;
     public final double ARM_SCORE_SAMPLE_IN_LOW   = 90 * ARM_TICKS_PER_DEGREE;
     public final double ARM_ATTACH_HANGING_HOOK   = 110 * ARM_TICKS_PER_DEGREE;
     public final double ARM_WINCH_ROBOT           = 10  * ARM_TICKS_PER_DEGREE;
@@ -107,8 +107,8 @@ public class HWProfile {
         liftMotor       = hwmap.dcMotor.get("liftMotor");
         //armMotor        = hwmap.get(DcMotor.class, "left_arm"); //the arm motor
         hangMotor       = hwmap.dcMotor.get("hangMotor");
-        intakeRotate1   = hwmap.servo.get("intakeR1");
-        intakeRotate2   = hwmap.servo.get("intakeR2");
+//        intakeRotate1   = hwmap.servo.get("intakeR1");
+//        intakeRotate2   = hwmap.servo.get("intakeR2");
 
 
        /*
@@ -134,6 +134,7 @@ public class HWProfile {
         //armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         hangMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         hangMotor.setTargetPosition(0);
+        hangMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hangMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         /*This sets the maximum current that the control hub will apply to the arm before throwing a flag */
@@ -149,22 +150,21 @@ public class HWProfile {
 
         liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         liftMotor.setTargetPosition(0);
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         /* Define and initialize servos.*/
         intake = hwmap.get(CRServo.class, "intake");
         wrist  = hwmap.get(Servo.class, "wrist");
-        intakeRotate1 = hwmap.get(Servo.class, "intakeR1");
-        intakeRotate2 = hwmap.get(Servo.class, "intakeR2");
+//        intakeRotate1 = hwmap.get(Servo.class, "intakeR1");
+//        intakeRotate2 = hwmap.get(Servo.class, "intakeR2");
 
         /* Make sure that the intake is off, and the wrist is folded in. */
-        intake.setPower(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_OUT);
+        //intake.setPower(INTAKE_OFF);
+       // wrist.setPosition(WRIST_FOLDED_OUT);
 
         // Initializing positions for intake rotation servos
-        intakeRotate1.setPosition(0.6);
-        intakeRotate2.setPosition(.4);
 
     }
 
