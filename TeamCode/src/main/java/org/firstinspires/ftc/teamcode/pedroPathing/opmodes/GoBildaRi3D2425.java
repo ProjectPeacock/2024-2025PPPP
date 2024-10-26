@@ -27,6 +27,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -90,6 +91,8 @@ public class GoBildaRi3D2425 extends LinearOpMode {
         double rotate;
         double max;
 
+        int difference;
+
         //follower.startTeleopDrive();
         
         // Retrieve the IMU from the hardware map
@@ -120,6 +123,8 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
 
+            double driveSpeed = 1;
+
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
             // The equivalent button is start on Xbox-style controllers.
@@ -139,10 +144,10 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = (rotY + rotX + rx) / denominator;
-            double backLeftPower = (rotY - rotX + rx) / denominator;
-            double frontRightPower = (rotY - rotX - rx) / denominator;
-            double backRightPower = (rotY + rotX - rx) / denominator;
+            double frontLeftPower = ((rotY + rotX + rx) / denominator) * driveSpeed;
+            double backLeftPower = ((rotY - rotX + rx) / denominator) * driveSpeed;
+            double frontRightPower = ((rotY - rotX - rx) / denominator) * driveSpeed;
+            double backRightPower = ((rotY + rotX - rx) / denominator) * driveSpeed;
 
             robot.leftFrontDrive.setPower(frontLeftPower);
             robot.leftBackDrive.setPower(backLeftPower);
@@ -267,16 +272,25 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 armLiftComp = 0;
             }
 
+            if (armPosition > 60 * robot.ARM_TICKS_PER_DEGREE) {
+                driveSpeed = 0.4;
+                robot.hangMotor.setPower(0.4);
+            } else {
+                driveSpeed = 1;
+                robot.hangMotor.setPower(1);
+            }
+
            /* Here we set the target position of our arm to match the variable that was selected
             by the driver. We add the armPosition Variable to our armPositionFudgeFactor, before adding
             our armLiftComp, which adjusts the arm height for different lift extensions.
             We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
 
-            //robot.armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor + armLiftComp));
+            robot.hangMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor + armLiftComp));
 
-            //((DcMotorEx) robot.armMotor).setVelocity(2100);
-            //robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+            /*
+            ((DcMotorEx) robot.hangMotor).setVelocity(2100);
+            robot.hangMotor.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+             */
 
             /* Here we set the lift position based on the driver input.
             This is a.... weird, way to set the position of a "closed loop" device. The lift is run
@@ -308,7 +322,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
 
             // Double check.
             // Checks again if liftPosition is beyond its boundries or not.
-            // If it is outside the boundries, then it limits it to the boundries between 0 and the high bucket lift position.
+            // If it is outside its boundries, then it limits it to the boundries between 0 and the high bucket lift position.
             if (liftPosition < 0) {
                 liftPosition = 0;
             } else if (liftPosition > robot.LIFT_SCORING_IN_HIGH_BASKET) {
