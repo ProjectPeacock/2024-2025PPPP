@@ -50,7 +50,7 @@ public class sampleAuto extends LinearOpMode {
 
         //extend arm
         robot.liftMotor.setPower(1);
-        robot.liftMotor.setTargetPosition(1500);
+        robot.liftMotor.setTargetPosition(1400);
         sleep(1000);
         robot.wrist.setPosition(0.55);
 

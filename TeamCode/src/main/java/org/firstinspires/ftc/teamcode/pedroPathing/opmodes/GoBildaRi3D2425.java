@@ -193,19 +193,23 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
 
-            if (gamepad1.a) {
+            if (gamepad1.b) {
                 /* This is the intaking/collecting arm position */
                 armPosition = robot.ARM_HIGH_SCORE;
                 liftPosition = robot.LIFT_COLLAPSED;
                 robot.wrist.setPosition(robot.WRIST_FOLDED_OUT);
                 robot.intake.setPower(robot.INTAKE_COLLECT);
 
-            } else if (gamepad1.b) {
+            } else if (gamepad1.a) {
                     /*This is about 20° up from the collecting position to clear the barrier
                     Note here that we don't set the wrist position or the intake power when we
                     select this "mode", this means that the intake and wrist will continue what
                     they were doing before we clicked left bumper. */
-                armPosition = robot.ARM_CLEAR_BARRIER;
+                armPosition = robot.ARM_COLLECT;
+                liftPosition = robot.LIFT_COLLAPSED;
+                robot.wrist.setPosition(robot.WRIST_FOLDED_OUT);
+                robot.intake.setPower(robot.INTAKE_COLLECT);
+
             } else if (gamepad1.x) {
                 /* This is the correct height to score the sample in the HIGH BASKET */
                 armPosition = robot.ARM_SCORE_SAMPLE_IN_LOW;
@@ -237,6 +241,9 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 liftPosition = 0;
             } else if (gamepad1.y){
                 armPosition = robot.ARM_EXTENSION_ANGLE;
+            } else if (gamepad2.b){
+                liftPosition = robot.LIFT_SCORING_IN_HIGH_BASKET;
+
             }
 
             /*
