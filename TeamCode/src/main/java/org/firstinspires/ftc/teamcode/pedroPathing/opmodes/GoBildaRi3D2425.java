@@ -144,15 +144,15 @@ public class GoBildaRi3D2425 extends LinearOpMode {
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = ((rotY + rotX + rx) / denominator) * driveSpeed;
-            double backLeftPower = ((rotY - rotX + rx) / denominator) * driveSpeed;
-            double frontRightPower = ((rotY - rotX - rx) / denominator) * driveSpeed;
-            double backRightPower = ((rotY + rotX - rx) / denominator) * driveSpeed;
+            double frontLeftPower = (rotY + rotX + rx) / denominator;
+            double backLeftPower = (rotY - rotX + rx) / denominator;
+            double frontRightPower = (rotY - rotX - rx) / denominator;
+            double backRightPower = (rotY + rotX - rx) / denominator;
 
-            robot.leftFrontDrive.setPower(frontLeftPower);
-            robot.leftBackDrive.setPower(backLeftPower);
-            robot.rightFrontDrive.setPower(frontRightPower);
-            robot.rightBackDrive.setPower(backRightPower);
+            robot.leftFrontDrive.setPower(frontLeftPower * driveSpeed);
+            robot.leftBackDrive.setPower(backLeftPower * driveSpeed);
+            robot.rightFrontDrive.setPower(frontRightPower * driveSpeed);
+            robot.rightBackDrive.setPower(backRightPower * driveSpeed);
 
 
             /* Here we handle the three buttons that have direct control of the intake speed.
@@ -272,7 +272,7 @@ public class GoBildaRi3D2425 extends LinearOpMode {
                 armLiftComp = 0;
             }
 
-            if (armPosition > 60 * robot.ARM_TICKS_PER_DEGREE) {
+            if (robot.hangMotor.getCurrentPosition() > 60 * robot.ARM_TICKS_PER_DEGREE) {
                 driveSpeed = 0.4;
                 robot.hangMotor.setPower(0.4);
             } else {
