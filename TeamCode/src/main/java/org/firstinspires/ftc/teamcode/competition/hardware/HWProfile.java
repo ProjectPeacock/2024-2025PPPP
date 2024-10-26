@@ -53,7 +53,7 @@ public class HWProfile {
     If you'd like it to move further, increase that number. If you'd like it to not move
     as far from the starting position, decrease it. */
 
-    public final double ARM_COLLAPSED_INTO_ROBOT  = 10;
+    public final double ARM_COLLAPSED_INTO_ROBOT  = 0;
     public final double ARM_COLLECT               = 0 * ARM_TICKS_PER_DEGREE;
     public final int ARM_CLEAR_BARRIER         = 200;
     public final double ARM_EXTENSION_ANGLE = 500;
@@ -163,10 +163,9 @@ public class HWProfile {
         wrist.setPosition(WRIST_FOLDED_OUT);
 
         // Initializing positions for intake rotation servos
-        intakeRotate1.setPosition(0.5);
-        intakeRotate2.setPosition(.5);
+        intakeRotate1.setPosition(0.6);
+        intakeRotate2.setPosition(.4);
 
     }
-    public static final double AUTO_MAX_SPEED = .75;
 
 }

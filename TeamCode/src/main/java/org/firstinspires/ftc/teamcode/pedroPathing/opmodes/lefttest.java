@@ -75,7 +75,7 @@ public class lefttest extends LinearOpMode {
 
          int PathBuilder = 1;
 
-         autoManager.setSpeed(HWProfile.AUTO_MAX_SPEED);
+         //autoManager.setSpeed(HWProfile.AUTO_MAX_SPEED);
 
             while (opMode.opModeIsActive()){
                 switch (PathBuilder) {
