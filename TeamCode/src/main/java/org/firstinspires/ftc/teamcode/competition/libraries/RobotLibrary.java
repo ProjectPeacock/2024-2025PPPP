@@ -50,5 +50,8 @@ public class RobotLibrary {
         robot.rightFrontDrive.setPower(0);
         robot.rightBackDrive.setPower(0);
     }
-
+    public void openClaw(){robot.claw.setPosition(robot.CLAW_OPEN);}
+    public void closeClaw(){
+        robot.claw.setPosition(robot.CLAW_CLOSED);
+    }
 }

@@ -19,6 +19,8 @@ public class HWProfile {
     public DcMotor  hangMotor        = null;
     public CRServo  intake           = null; //the active intake servo
     public Servo    wrist            = null; //the wrist servo
+    public Servo    claw               = null;
+
 
 //    public Servo    intakeRotate1    = null;
 //    public Servo    intakeRotate2    = null;
@@ -54,13 +56,13 @@ public class HWProfile {
     as far from the starting position, decrease it. */
 
     public final double ARM_COLLAPSED_INTO_ROBOT  = 0;
-    public final double ARM_COLLECT               = 5 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_COLLECT               = 12 * ARM_TICKS_PER_DEGREE;
     public final int ARM_CLEAR_BARRIER         = 200;
     public final double ARM_EXTENSION_ANGLE = 400;
     //    public final double ARM_CLEAR_BARRIER         = 15 * ARM_TICKS_PER_DEGREE;
     public final int ARM_SCORE_SPECIMEN        = 300;
     //    public final double ARM_SCORE_SPECIMEN        = 90 * ARM_TICKS_PER_DEGREE;
-    public final double ARM_SCORE_SAMPLE_IN_LOW   = 110 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_SCORE_SAMPLE_IN_LOW   = 100 * ARM_TICKS_PER_DEGREE;
     public final double ARM_ATTACH_HANGING_HOOK   = 130 * ARM_TICKS_PER_DEGREE;
 
     public final double ARM_WINCH_ROBOT           = 0  * ARM_TICKS_PER_DEGREE;
@@ -80,8 +82,12 @@ public class HWProfile {
     public final double INTAKE_R2_P2 = 1 - INTAKE_ROTATION_MULTIPLIER;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    public final double WRIST_FOLDED_IN   = 0.1667;
+    public final double WRIST_FOLDED_IN   = 0;
     public final double WRIST_FOLDED_OUT  = 0.55;
+
+    public final double CLAW_OPEN = 0;
+    public final double CLAW_CLOSED = .6;
+
 
     /* A number in degrees that the triggers can adjust the arm position by */
     public final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -139,6 +145,8 @@ public class HWProfile {
         hangMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         hangMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+
+
         /*This sets the maximum current that the control hub will apply to the arm before throwing a flag */
         //((DcMotorEx) armMotor).setCurrentAlert(5,CurrentUnit.AMPS);
 
@@ -157,8 +165,9 @@ public class HWProfile {
         //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         /* Define and initialize servos.*/
-        intake = hwmap.get(CRServo.class, "intake");
+        //intake = hwmap.get(CRServo.class, "intake");
         wrist  = hwmap.get(Servo.class, "wrist");
+        claw = hwmap.get(Servo.class, "claw");
 //        intakeRotate1 = hwmap.get(Servo.class, "intakeR1");
 //        intakeRotate2 = hwmap.get(Servo.class, "intakeR2");
 
